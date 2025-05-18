@@ -1,0 +1,84 @@
+/* Navbar.css - Slack-inspired design */
+*{
+    margin: 0;
+    padding: 0;
+}
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #1b191b; /* Slack's signature purple */
+  height: 60px;
+  padding: 0 16px;
+  color: white;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.1);
+}
+
+.navbar-logo {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.navbar-logo a {
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.navbar-logo a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.navbar-item {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 8px;
+}
+
+.navbar-item li {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-item a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.navbar-item a:hover {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Optional: Add active state for current page */
+.navbar-item a.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 12px;
+  }
+  
+  .navbar-logo {
+    margin-bottom: 10px;
+  }
+  
+  .navbar-item {
+    width: 100%;
+    justify-content: center;
+  }
+}
