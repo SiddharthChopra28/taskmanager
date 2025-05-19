@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 export default function Register() {
@@ -10,7 +11,7 @@ export default function Register() {
         "password": ""
     })
     const handleFormSubmit = () =>{
-        fetch(`${BASE_URL}register/`,{
+        fetch(`${BASE_URL}login/`,{
             method: 'POST',
             headers:{
                 'Content-Type': 'application/json',
@@ -30,7 +31,7 @@ export default function Register() {
     <div className = "text-center container border border-dark mt-3 mb-3" >
         <div className ='mt-3'>
             <h3>
-                Register
+                Login
             </h3>
         </div>
         <div className ='mt-3'>
@@ -46,8 +47,11 @@ export default function Register() {
             <TextField id="password" type ='password' label="Password" variant="outlined" onChange={e => setFormData({...formData, password: e.target.value})}/>
         </div>     
         <div className ='mt-3 mb-3'>
-            <Button variant="contained" onClick={handleFormSubmit}>Register</Button>    
+            <Button variant="contained" onClick={handleFormSubmit}>Login</Button>    
         </div> 
+        <p>
+            New Here? <Link to="/Register">Register</Link>
+        </p>
     </div>
     </>
   )
