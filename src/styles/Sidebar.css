@@ -24,15 +24,27 @@ overflow-y: auto;
     
   flex: 1;
 }
-
 .sidebar__addChannel {
-    background-color:black;
-    outline: none;
-    color: white;
+  background-color: #111827; /* deep gray-black */
+  color: #f9fafb; /* near-white for contrast */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
 .sidebar__addChannel:hover {
-  color: grey;
+  background-color: #1f2937; /* lighter black/gray on hover */
+  color: #d1d5db; /* soft gray text */
+  transform: translateY(-1px);
+}
+
+.sidebar__addChannel:active {
+  transform: translateY(0);
+  background-color: #374151; /* pressed state */
 }
 
 .sidebar__channelsHeader {

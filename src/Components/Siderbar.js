@@ -10,6 +10,7 @@ import Modal from './Modal';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import axios from 'axios'
+import ToggleButton from './ToggleButton';
  function Siderbar() {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -61,7 +62,7 @@ import axios from 'axios'
         </div>
         <div className = "siderbar__channels mt-3"> 
             <div className = "siderbar__channelsHeader">
-                <h4>Text Channels</h4>
+                <ToggleButton />
             </div>
         </div>
         <div className = "siderbar__channelsList mt-3">
@@ -75,13 +76,15 @@ import axios from 'axios'
         </List>)
         }
         </div>
-        <div>
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem', marginBottom: '1rem' }}>
             <button
-            className="sidebar__addChannel text-center mt-3 p-3"
-            onClick={() => setIsModalOpen(true)}
-            >ADD ROOM
-            </button>     
+                className="sidebar__addChannel text-center mt-3"
+                onClick={() => setIsModalOpen(true)}
+            >
+                ADD ROOM
+            </button>
         </div>
+
         <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

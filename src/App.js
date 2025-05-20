@@ -7,6 +7,7 @@ import Home from './Components/Home';
 import {createBrowserRouter,RouterProvider } from 'react-router-dom';
 import ChatArea from './Components/ChatArea';
 import ActivateAccount from './Components/ActivateAccount';
+import Task from './Components/Task';
 function App() {
   const router = createBrowserRouter([
     {
@@ -26,6 +27,13 @@ function App() {
       element:<><div className='chat-container'>
         <Siderbar/>
         <ChatArea/>
+        </div></>
+    },
+    {
+      path:"/task/",
+      element:<><div className='chat-container'>
+        <Siderbar/>
+        <Task/>
         </div></>
     },
     {
