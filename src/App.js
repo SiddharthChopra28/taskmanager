@@ -6,6 +6,7 @@ import Siderbar from './Components/Siderbar';
 import Home from './Components/Home';
 import {createBrowserRouter,RouterProvider } from 'react-router-dom';
 import ChatArea from './Components/ChatArea';
+import Modal from './Components/Modal';
 function App() {
   const router = createBrowserRouter([
     {

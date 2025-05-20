@@ -3,10 +3,28 @@ import withAuthentication from '../utils/withAuthentication'
 import { bgcolor, maxWidth, width } from '@mui/system';
 import { LinearProgress } from '@mui/material';
 import ChannelItem from './ChannelItem';
+import '../styles/Sidebar.css';
+import Modal from './Modal';
+// import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+// import AddIcon from '@mui/icons-material/Add';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import axios from 'axios'
  function Siderbar() {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleCreateRoom = () => {
+    setIsModalOpen(false);
+    console.log('Create Room Clicked');
+    // Bro room create karwana
+  };
+
+  const handleJoinRoom = () => {
+    setIsModalOpen(false);
+    console.log('Join Room Clicked');
+    // Room join karwana
+  };
+
     const BASE_URL = "http://127.0.0.1:8000/";
     const [channellist,setchannellist] = useState([])
     const [channelloader,setchannelloader] = useState(true)
@@ -37,8 +55,17 @@ import axios from 'axios'
         }
     },[])
   return (
-    <div className='sidebar'>
-        {channelloader ? (<Box sx={{width:'100%'}}>
+    <div className="sidebar">
+        <div className="sidebar__top">
+            <h2>CHANNELS</h2>
+        </div>
+        <div className = "siderbar__channels mt-3"> 
+            <div className = "siderbar__channelsHeader">
+                <h4>Text Channels</h4>
+            </div>
+        </div>
+        <div className = "siderbar__channelsList mt-3">
+            {channelloader ? (<Box sx={{width:'100%'}}>
             <LinearProgress/>
         </Box>):
         (<List sx={{width:'100%',maxWidth:360,bgcolor: 'background.paper'}}>
@@ -47,6 +74,20 @@ import axios from 'axios'
             ))}
         </List>)
         }
+        </div>
+        <div>
+            <button
+            className="sidebar__addChannel text-center mt-3 p-3"
+            onClick={() => setIsModalOpen(true)}
+            >ADD ROOM
+            </button>     
+        </div>
+        <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onCreateRoom={handleCreateRoom}
+        onJoinRoom={handleJoinRoom}
+      />
     </div>
   )
 }
