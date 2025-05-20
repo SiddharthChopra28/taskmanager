@@ -6,7 +6,7 @@ import Siderbar from './Components/Siderbar';
 import Home from './Components/Home';
 import {createBrowserRouter,RouterProvider } from 'react-router-dom';
 import ChatArea from './Components/ChatArea';
-import Modal from './Components/Modal';
+import ActivateAccount from './Components/ActivateAccount';
 function App() {
   const router = createBrowserRouter([
     {
@@ -27,6 +27,10 @@ function App() {
         <Siderbar/>
         <ChatArea/>
         </div></>
+    },
+    {
+      path:path="/activate/:uid/:token",
+      element:<ActivateAccount/>
     },
   ])
   return (
