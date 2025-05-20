@@ -14,21 +14,58 @@ import ToggleButton from './ToggleButton';
  function Siderbar() {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const handleCreateRoom = () => {
+    useEffect(() => {
+    const authToken = localStorage.getItem('access');
+    const userID = localStorage.getItem('user_id');
+
+    if (!authToken || !userID) {
+        console.error("Missing auth token or user ID");
+        return;
+    }
+
+    axios.get(`${BASE_URL}rooms/byUser/${userID}/`, {
+        headers: {
+            Authorization: `Bearer ${authToken}`
+        }
+    })
+    .then(response => {
+        const rooms = response.data;
+        setchannellist(rooms); // response.data should be the list of room objects
+        localStorage.setItem('rooms', JSON.stringify(rooms));
+        setchannelloader(false);
+    })
+    .catch(error => {
+        console.error("Error fetching rooms:", error);
+        setchannelloader(false);
+    });
+}, []);
+
+   const handleCreateRoom = (roomName) => {
         setIsModalOpen(false);
-        console.log('Create Room Clicked');
-        axios.get('${BASE_URL}api/users/',{
-            headers:{
-                Authorization: 'Bearer ${authToken}'
+        const authToken = localStorage.getItem('access');
+        const userID = localStorage.getItem('user_id');
+
+        if (!authToken || !userID) {
+            console.error("Missing auth token or user ID");
+            return;
+        }
+
+        axios.post(`${BASE_URL}rooms/createRoom/`, {
+            'owner-id': userID,
+            name: roomName,
+        }, {
+            headers: {
+            Authorization: `Bearer ${authToken}`,
             }
-        }).then(response =>{
-            setchannellist(response.data)
-            setchannelloader(false)
-            console.log(response)
-        }).catch(error => {
-            console.log("Error making API request:",error)
         })
-        };
+        .then(response => {
+            console.log("Room created with join code:", response.data.joincode);
+            navigator.clipboard.writeText('response.data.joincode'); // copy code to clipboardddd
+        })
+        .catch(error => {
+            console.error("Error creating room:", error);
+        });
+};
 
   const handleJoinRoom = () => {
     setIsModalOpen(false);
@@ -39,30 +76,9 @@ import ToggleButton from './ToggleButton';
     const BASE_URL = "http://127.0.0.1:8000/";
     const [channellist,setchannellist] = useState([])
     const [channelloader,setchannelloader] = useState(true)
-    // const getAuthTokenFromCookie =() =>{
-    //     const cookies = document.cookie.split(';')
-    //     for (const cookie in cookies) {
-    //        const [name,value] = cookie.trim().split() 
-    //         }
-    //     }
-    // }
-    const functionforauthtoken =() =>{
-        return null
-    }
-    useEffect(() =>{
-        const authToken = functionforauthtoken()
-        axios.get('${BASE_URL}api/users/',{
-            headers:{
-                Authorization: 'Bearer ${authToken}'
-            }
-        }).then(response =>{
-            setchannellist(response.data)
-            setchannelloader(false)
-            console.log(response)
-        }).catch(error => {
-            console.log("Error making API request:",error)
-        })
-    },[])
+    const functionforauthtoken = () => {
+        return localStorage.getItem('access');
+    };
   return (
     <div className="sidebar">
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '0.3rem', marginBottom: '1rem' }} className="sidebar__top" >
@@ -77,11 +93,11 @@ import ToggleButton from './ToggleButton';
             {channelloader ? (<Box sx={{width:'100%'}}>
             <LinearProgress/>
         </Box>):
-        (<List sx={{width:'100%',maxWidth:360,bgcolor: 'background.paper'}}>
-            {channellist.map((channel,index)=>(
-                <ChannelItem key ={index} id={channel.id} name ={channel.name}></ChannelItem>
+        <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+            {channellist.map((channel, index) => (
+                <ChannelItem key={index} id={channel.owner} name={channel.name} />
             ))}
-        </List>)
+        </List>
         }
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem', marginBottom: '1rem' }}>
