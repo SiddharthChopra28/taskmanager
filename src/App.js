@@ -36,10 +36,6 @@ function App() {
         <Task/>
         </div></>
     },
-    {
-      path:"/activate/:uid/:token",
-      element:<ActivateAccount/>
-    },
   ])
   return (
    <>

@@ -57,8 +57,8 @@ import ToggleButton from './ToggleButton';
     },[])
   return (
     <div className="sidebar">
-        <div className="sidebar__top">
-            <h2>CHANNELS</h2>
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '0.3rem', marginBottom: '1rem' }} className="sidebar__top" >
+            <h3>CHANNELS</h3>
         </div>
         <div className = "siderbar__channels mt-3"> 
             <div className = "siderbar__channelsHeader">
