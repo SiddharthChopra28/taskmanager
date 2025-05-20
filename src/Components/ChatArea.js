@@ -16,4 +16,5 @@ function ChatArea() {
     )
 } 
 
-export default withAuthentication(ChatArea)
+export default ChatArea
+//export default withAuthentication(ChatArea)
