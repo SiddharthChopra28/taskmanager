@@ -29,7 +29,7 @@ function App() {
         </div></>
     },
     {
-      path:path="/activate/:uid/:token",
+      path:"/activate/:uid/:token",
       element:<ActivateAccount/>
     },
   ])

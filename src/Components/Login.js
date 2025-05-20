@@ -3,24 +3,29 @@ import { Link } from 'react-router-dom'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 export default function Register() {
-    const BASE_URL = "http://127.0.0.1:8000/";
+    const BASE_URL = "http://127.0.0.1:8000";
     const [formData,setFormData] = useState({
         "email":"",
         "password": ""
     })
+
     const handleFormSubmit = () =>{
-        fetch(`${BASE_URL}login/`,{
+        fetch(`${BASE_URL}/auth/jwt/create`,{
             method: 'POST',
             headers:{
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(formData)
         })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok){
+                localStorage.setItem('access', response.json()['access'])
+                localStorage.setItem('refresh', response.json()['refresh'])
+            }
+            return response.json()
+        })
         .then(data =>{
             console.log(data);
-            const token = data.token;
-            document.cookie ='token=${ token }; path=/'
         })
         .catch(error =>{
             console.log(error);
