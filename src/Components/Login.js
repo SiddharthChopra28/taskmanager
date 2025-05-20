@@ -9,28 +9,47 @@ export default function Register() {
         "password": ""
     })
 
-    const handleFormSubmit = () =>{
-        fetch(`${BASE_URL}/auth/jwt/create`,{
-            method: 'POST',
-            headers:{
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData)
-        })
-        .then(response => {
-            if (response.ok){
-                localStorage.setItem('access', response.json()['access'])
-                localStorage.setItem('refresh', response.json()['refresh'])
-            }
-            return response.json()
-        })
-        .then(data =>{
-            console.log(data);
-        })
-        .catch(error =>{
-            console.log(error);
-        })
-    }
+   const handleFormSubmit = () => {
+    fetch(`${BASE_URL}/auth/jwt/create`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(async response => {
+        const data = await response.json();
+        if (response.ok) {
+            localStorage.setItem('access', data.access);
+            localStorage.setItem('refresh', data.refresh);
+            localStorage.setItem('email', formData.email);
+
+            // to get userID and store for future use
+            fetch(`${BASE_URL}/auth/getID`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: formData.email }),
+            })
+            .then(res => res.json())
+            .then(userData => {
+                if (userData.id) {
+                    localStorage.setItem('userID', userData.id); 
+                }
+            })
+            .catch(err => {
+                console.error("Error fetching user ID:", err);
+            });
+        } else {
+            console.error("Login failed:", data);
+        }
+    })
+    .catch(error => {
+        console.error("Login error:", error);
+    });
+};
+
   return (
     <>
     <div className = "text-center container border border-dark mt-3 mb-3" >

@@ -15,10 +15,20 @@ import ToggleButton from './ToggleButton';
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleCreateRoom = () => {
-    setIsModalOpen(false);
-    console.log('Create Room Clicked');
-    // Bro room create karwana
-  };
+        setIsModalOpen(false);
+        console.log('Create Room Clicked');
+        axios.get('${BASE_URL}api/users/',{
+            headers:{
+                Authorization: 'Bearer ${authToken}'
+            }
+        }).then(response =>{
+            setchannellist(response.data)
+            setchannelloader(false)
+            console.log(response)
+        }).catch(error => {
+            console.log("Error making API request:",error)
+        })
+        };
 
   const handleJoinRoom = () => {
     setIsModalOpen(false);
@@ -41,8 +51,7 @@ import ToggleButton from './ToggleButton';
     }
     useEffect(() =>{
         const authToken = functionforauthtoken()
-        if(authToken){
-            axios.get('${BASE_URL}api/users/',{
+        axios.get('${BASE_URL}api/users/',{
             headers:{
                 Authorization: 'Bearer ${authToken}'
             }
@@ -53,7 +62,6 @@ import ToggleButton from './ToggleButton';
         }).catch(error => {
             console.log("Error making API request:",error)
         })
-        }
     },[])
   return (
     <div className="sidebar">
