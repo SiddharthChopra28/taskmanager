@@ -11,7 +11,12 @@ import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import axios from 'axios'
 import ToggleButton from './ToggleButton';
+
  function Siderbar() {
+    const BASE_URL = "http://127.0.0.1:8000/";
+    const [channellist,setchannellist] = useState([])
+    const [channelloader,setchannelloader] = useState(true)
+    const getAuthToken = () => localStorage.getItem('access');
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
@@ -60,25 +65,66 @@ import ToggleButton from './ToggleButton';
         })
         .then(response => {
             console.log("Room created with join code:", response.data.joincode);
-            navigator.clipboard.writeText('response.data.joincode'); // copy code to clipboardddd
-        })
+            navigator.clipboard.writeText(response.data.joincode); // copy code to clipboardddd
+            return axios.get(`${BASE_URL}rooms/byUser/${userID}/`, {
+                    headers: {
+                        Authorization: `Bearer ${authToken}`
+                    }
+                });
+            })
+            .then(response => {
+                setchannellist(response.data);
+            })
         .catch(error => {
             console.error("Error creating room:", error);
         });
 };
 
-  const handleJoinRoom = () => {
+  const handleJoinRoom = (joinCode) => {
     setIsModalOpen(false);
-    console.log('Join Room Clicked');
-    // Room join karwana
-  };
 
-    const BASE_URL = "http://127.0.0.1:8000/";
-    const [channellist,setchannellist] = useState([])
-    const [channelloader,setchannelloader] = useState(true)
-    const functionforauthtoken = () => {
-        return localStorage.getItem('access');
-    };
+    const authToken = localStorage.getItem('access');
+    const userID = localStorage.getItem('user_id');
+
+    if (!authToken || !userID) {
+        console.error("Missing auth token or user ID");
+        return;
+    }
+
+    axios.post(`${BASE_URL}rooms/join/`, {
+        hash: joinCode
+    }, {
+        headers: {
+            Authorization: `Bearer ${authToken}`
+        }
+    })
+    .then(response => {
+        if (response.status === 201) {
+            console.log("Successfully joined room");
+
+            // Optionally refresh the room list
+            axios.get(`${BASE_URL}rooms/byUser/${userID}/`, {
+                headers: {
+                    Authorization: `Bearer ${authToken}`
+                }
+            })
+            .then(res => {
+                setchannellist(res.data);
+                alert("Successfully joined room!");
+            });
+
+        } else {
+            console.warn("Unexpected response:", response);
+        }
+    })
+    .catch(error => {
+        console.error("Error joining room:", error.response?.data || error.message);
+        alert("Failed to join room. Please check the join code.");
+    });
+};
+
+ 
+
   return (
     <div className="sidebar">
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '0.3rem', marginBottom: '1rem' }} className="sidebar__top" >
