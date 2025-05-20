@@ -4,7 +4,7 @@ from accounts.models import CustomUser
 class Room(models.Model):
     
     name = models.TextField()
-    owner = models.ForeignKey(CustomUser)
+    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     students = models.ManyToManyField(CustomUser, related_name='rooms')
 
     #also has a messages object, from foreign key

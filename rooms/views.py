@@ -4,12 +4,12 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Room
-from ..accounts.models import CustomUser
-from ..accounts.serializers import UserSerializer
+from accounts.models import CustomUser
+from accounts.serializers import UserCreateSerializer
 from .serializers import RoomSerializer, AssignmentSerializer
-from ..chat.serializers import MessageSerializer
+from chat.serializers import MessageSerializer
 from hashlib import sha256
-from ..taskmanager.settings import BASE_URL, SECRET_KEY
+from taskmanager.settings import BASE_URL, SECRET_KEY
 
 
 # from .serializers import ItemSerializer
@@ -39,10 +39,10 @@ def getRoomInfo(req, roomid):
     ass_serializer = AssignmentSerializer(assignments, many=True)
     
     students = room.students.all()
-    stud_serializer = UserSerializer(students, many=True)
+    stud_serializer = UserCreateSerializer(students, many=True)
     
     owner = room.owner()
-    owner_serializer = UserSerializer(owner)
+    owner_serializer = UserCreateSerializer(owner)
 
     return Response({'messages': msg_serializer.data, 'assignments': ass_serializer.data, 'students': stud_serializer.data, 'owner': owner_serializer.data})
 
@@ -55,14 +55,34 @@ def makeAssignment(req):
     data = req.data
     roomid = data['roomid']
     room = Room.objects.get(id=roomid)
+    studs = Room.students.all()
     if user != room.owner:
         return Response({'error': 'Unauthorized'})
     
     serializer = AssignmentSerializer(data=req.data)
     if serializer.is_valid():
-        serializer.save()
+        ass = serializer.save()
+        serializer.save(parent_room=room)
+        ass.expected_from.set(studs)
+      
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
+    return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def createRoom(req):
+    data = req.data
+    serializer = RoomSerializer(data=req.data)
+    owner = CustomUser.objects.get(id=data['owner-id'])
+    
+    if serializer.is_valid():
+        rm = serializer.save()
+        serializer.save(owner=owner)
+    
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
     return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -82,7 +102,7 @@ def generateLink(req):
     
     hex_ = sha256(room_name.encode('utf-8')).hexdigest() + sha256(room_id.encode('utf-8')).hexdigest() + sha256(room_owner.encode('utf-8')).hexdigest() + sha256(SECRET_KEY.encode('utf-8')).hexdigest()
 
-    return Response({'link': f"{BASE_URL}/join/{hex_}"})
+    return Response({'roomid': f"{hex_}"})
     
     
     
