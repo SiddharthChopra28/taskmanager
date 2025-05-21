@@ -1,0 +1,22 @@
+Vinayak:
+Majority of React Components and Frontend.
+Login SignUp in Django
+Siddharth:
+Django Backend:- Models ,Database Connection and Setting servers, Assignment and chat feature.
+
+for acativation: need to make a page on the frontend: /activate route which takes the token and user id from the url and then call the backend api to activate the user.
+need to implement jwt token storage and refreshing on the frontend
+
+Endpoint	                                Purpose
+
+/users/	Register/list                       users
+/users/me/	                                Current user profile
+/users/activation/	                        Activate user account
+/users/resend_activation/	                Resend activation email
+/users/set_password/	                    Change password
+/users/reset_password/	                    Request password reset
+/users/reset_password_confirm/	            Confirm password reset
+/users/set_username/	                    Change username/email
+/users/reset_username/	                    Request username reset
+/users/reset_username_confirm/	            Confirm username reset
+/users/{id}/	                            Retrieve/update/delete user by ID
