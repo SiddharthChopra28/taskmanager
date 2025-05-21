@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-export default function Register() {
+export default function Login(){
     const BASE_URL = "http://127.0.0.1:8000";
     const [formData,setFormData] = useState({
         "email":"",

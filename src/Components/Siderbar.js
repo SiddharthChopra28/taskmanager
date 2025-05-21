@@ -21,14 +21,13 @@ import ToggleButton from './ToggleButton';
 
     useEffect(() => {
     const authToken = localStorage.getItem('access');
-    const userID = localStorage.getItem('user_id');
 
-    if (!authToken || !userID) {
+    if (!authToken) {
         console.error("Missing auth token or user ID");
         return;
     }
 
-    axios.get(`${BASE_URL}rooms/byUser/${userID}/`, {
+    axios.get(`${BASE_URL}rooms/byUser/`, {
         headers: {
             Authorization: `Bearer ${authToken}`
         }
@@ -48,7 +47,6 @@ import ToggleButton from './ToggleButton';
    const handleCreateRoom = (roomName) => {
         setIsModalOpen(false);
         const authToken = localStorage.getItem('access');
-        const userID = localStorage.getItem('user_id');
 
         if (!authToken || !userID) {
             console.error("Missing auth token or user ID");
@@ -56,7 +54,6 @@ import ToggleButton from './ToggleButton';
         }
 
         axios.post(`${BASE_URL}rooms/createRoom/`, {
-            'owner-id': userID,
             name: roomName,
         }, {
             headers: {
@@ -66,7 +63,7 @@ import ToggleButton from './ToggleButton';
         .then(response => {
             console.log("Room created with join code:", response.data.joincode);
             navigator.clipboard.writeText(response.data.joincode); // copy code to clipboardddd
-            return axios.get(`${BASE_URL}rooms/byUser/${userID}/`, {
+            return axios.get(`${BASE_URL}rooms/byUser/`, {
                     headers: {
                         Authorization: `Bearer ${authToken}`
                     }
@@ -84,9 +81,8 @@ import ToggleButton from './ToggleButton';
     setIsModalOpen(false);
 
     const authToken = localStorage.getItem('access');
-    const userID = localStorage.getItem('user_id');
 
-    if (!authToken || !userID) {
+    if (!authToken ) {
         console.error("Missing auth token or user ID");
         return;
     }
