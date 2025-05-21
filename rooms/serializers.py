@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Room, Assignment
+from .models import Room
 
 
 class RoomSerializer(serializers.ModelSerializer):
@@ -7,8 +7,4 @@ class RoomSerializer(serializers.ModelSerializer):
         model = Room
         fields = '__all__'
 
-class AssignmentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Assignment
-        fields = '__all__'
 
