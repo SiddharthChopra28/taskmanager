@@ -3,10 +3,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 export default function ChannelItem(props) {
 
-    const channelUrl = '/channel/${props.name}'
 
   return (
-    <Link to={channelUrl}>
+    <a href={`/task/${props.channelid}/${Number(props.ownerid == props.userid)}`}>
         <ListItem>
             <ListItemAvatar>
                 <Avatar>
@@ -14,7 +13,7 @@ export default function ChannelItem(props) {
             </ListItemAvatar>
             <ListItemText primary={props.name} secondary={props.id}></ListItemText>
         </ListItem>
-    </Link>
+    </a>
     
   )
 }

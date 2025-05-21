@@ -30,13 +30,10 @@ function App() {
         </div></>
     },
     {
-      path:"/task/",
+      path:"/task/:roomid/:owner",
       element:<><div className='chat-container'>
         <Siderbar/>
-        <Task
-              isOwner={false}
-              roomid={2} // pass your actual room no
-            />
+        <Task/>
 
         </div></>
     },

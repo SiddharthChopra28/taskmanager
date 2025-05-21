@@ -23,8 +23,10 @@ def getRooms(req):
     out = []
     for room in rooms:
         d = {}
+        d['roomid'] = room.id
         d['name'] = room.name
         d['owner'] = room.owner.id
+        d['assignment_name'] = room.assignment_name
         d['students'] = [s.id for s in room.students.all()]
 
         out.append(d)
@@ -64,16 +66,18 @@ def makeAssignment(req):
     data = req.data
     roomid = data['roomid']
     room = Room.objects.get(id=roomid)
-    studs = Room.students.all()
-    if user != room.owner or room.assignment_name != None:
+
+
+
+    if user != room.owner or room.assignment_name != '':
         return Response({'error': 'Unauthorized'})
     
-    room.assignment_name = req.name
+    room.assignment_name = data['assignment_name']
     room.assignment_submissions = {}
     
     room.save()
     
-    return Response(status=status.HTTP_201_CREATED)
+    return Response({'message': 'vinayak is gay'} , status=status.HTTP_201_CREATED)
 
 
 @api_view(['POST'])
@@ -116,7 +120,8 @@ def joinLink(req):
     room = Room.objects.get(id=roomid)
     
     
-    ourhex = sha256(room.name.encode('utf-8')).hexdigest() + sha256(room.owner.name.encode('utf-8')).hexdigest() + sha256(SECRET_KEY.encode('utf-8')).hexdigest()
+    ourhex = str(roomid) + '/' + sha256(room.name.encode('utf-8')).hexdigest() + sha256(room.owner.name.encode('utf-8')).hexdigest() + sha256(SECRET_KEY.encode('utf-8')).hexdigest()
+    
     
     if hex_ != ourhex or user == room.owner:
         return Response({'error': 'Unauthorized'})
@@ -131,16 +136,17 @@ def joinLink(req):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def submitAssignment(req):
-    text = req['text']
-    roomid = req['roomid']
+    text = req.data['text']
+    roomid = req.data['roomid']
     room = Room.objects.get(id=roomid)
     userid = req.user.id
-    
+
     prev_submissions = room.assignment_submissions
     if userid in prev_submissions.keys():
         return Response({'error': 'Unauthorized'})
     
     prev_submissions[userid] = text
     room.assignment_submissions = prev_submissions
+    room.save()
     
-    return Response(None, status=status.HTTP_201_CREATED)
+    return Response({'hi': 'vinayak is gae'}, status=status.HTTP_201_CREATED)

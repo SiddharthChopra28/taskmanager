@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import {Link} from 'react-router-dom'
 import withAuthentication from '../utils/withAuthentication'
 import { bgcolor, maxWidth, width } from '@mui/system';
-import { LinearProgress } from '@mui/material';
+import { Button, LinearProgress } from '@mui/material';
 import ChannelItem from './ChannelItem';
 import '../styles/Sidebar.css';
 import Modal from './Modal';
@@ -11,6 +12,7 @@ import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import axios from 'axios'
 import ToggleButton from './ToggleButton';
+var userid = 0
 
  function Siderbar() {
     const BASE_URL = "http://127.0.0.1:8000/";
@@ -43,6 +45,30 @@ import ToggleButton from './ToggleButton';
         setchannelloader(false);
     });
 }, []);
+
+    fetch(`${BASE_URL}auth/getID`,{
+        method: 'POST',
+        headers:{
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('access')}`
+        },
+        body: JSON.stringify({'email': localStorage.getItem('email')})
+        })
+        .then(response => {
+            console.log(response)
+            if (response.ok){
+                var data =  response.json()
+            }
+            return data
+        })
+        .then(data =>{
+            userid = data['id']
+        })
+        .catch(error =>{
+            console.log(error);
+        })
+
+
 
    const handleCreateRoom = (roomName) => {
         setIsModalOpen(false);
@@ -119,7 +145,6 @@ import ToggleButton from './ToggleButton';
     });
 };
 
- 
 
   return (
     <div className="sidebar">
@@ -137,7 +162,10 @@ import ToggleButton from './ToggleButton';
         </Box>):
         <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
             {channellist.map((channel, index) => (
-                <ChannelItem key={index} id={channel.owner} name={channel.name} />
+                // 
+                <ChannelItem key={index} ownerid={channel.owner} name={channel.name} userid={userid} channelid = {channel.roomid}/>
+                
+
             ))}
         </List>
         }
