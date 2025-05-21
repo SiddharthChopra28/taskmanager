@@ -33,7 +33,11 @@ function App() {
       path:"/task/",
       element:<><div className='chat-container'>
         <Siderbar/>
-        <Task/>
+        <Task
+              isOwner={false}
+              roomid={2} // pass your actual room no
+            />
+
         </div></>
     },
   ])

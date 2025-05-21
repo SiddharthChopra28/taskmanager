@@ -5,9 +5,9 @@ class Room(models.Model):
     
     name = models.TextField()
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    students = models.ManyToManyField(CustomUser, related_name='rooms')
-    assignment_name = models.TextField()
-    assignment_submissions = models.JSONField()
+    students = models.ManyToManyField(CustomUser, related_name='rooms', null=True)
+    assignment_name = models.TextField(null=True)
+    assignment_submissions = models.JSONField(null=True)
 
     #also has a messages object, from foreign key
     

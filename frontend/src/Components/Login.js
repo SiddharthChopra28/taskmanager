@@ -35,8 +35,7 @@ export default function Register() {
             console.log(data);
             localStorage.setItem('access', data['access'])
             localStorage.setItem('refresh', data['refresh'])
-            localStorage.setItem('refresh', formData['email'])
-
+            localStorage.setItem('email', formData.email);
             console.log('login success')
             navigate('/chat/');
         })

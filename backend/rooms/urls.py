@@ -6,6 +6,6 @@ urlpatterns = [
     # path('info/<int:roomid>/', getRoomInfo),
     path('createRoom/', createRoom),
     path('createAss/', makeAssignment),
-    path('/join/', joinLink),
-    path('/submit/', submitAssignment)
+    path('join/', joinLink),
+    path('submit/', submitAssignment)
 ]

@@ -1,69 +1,82 @@
 import { useEffect, useState } from "react"
 import { Navigate } from "react-router-dom"
 
-const withAuthentication = (wrappedComponent) => {
-    const BASE_URL = "http://127.0.0.1:8000";
-    return function AuthComponent(props){
-        const[isAuthenticated, setIsAuthenticated]= useState(false)
+function withAuthentication(WrappedComponent) {
+    return function AuthWrapper(props) {
+        const [isAuthenticated, setIsAuthenticated] = useState(false);
+        const BASE_URL = "http://127.0.0.1:8000";
+
+
+        const [loading, setLoading] = useState(true);  // <-- new loading state
 
         useEffect(() => {
+            const access_token = localStorage.getItem('access');
+            const refresh_token = localStorage.getItem('refresh');
 
-            var access_token = localStorage.get('access')
-            var refresh_token = localStorage.get('refresh')
-
-            if(access_token && refresh_token){
-
-                fetch(`${BASE_URL}/auth/jwt/verify/`,{
+            if (access_token && refresh_token) {
+                fetch(`${BASE_URL}/auth/jwt/verify/`, {
                     method: 'POST',
-                    headers:{
+                    headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: { "token": access_token }
+                    body: JSON.stringify({ token: access_token })
                 })
                 .then(response => {
                     if (response.ok) {
                         setIsAuthenticated(true);
-                    }
-                    else{
-                        fetch(`${BASE_URL}/auth/jwt/refresh/`,{
+                        setLoading(false);
+                    } else {
+                        fetch(`${BASE_URL}/auth/jwt/refresh/`, {
                             method: 'POST',
-                            headers:{
+                            headers: {
                                 'Content-Type': 'application/json'
                             },
-                            body: {'refresh': refresh_token}
+                            body: JSON.stringify({ refresh: refresh_token })  // <-- fix here
                         })
-                        .then(response => {
-                            if (response.ok) {
-                                localStorage.set('access', response.json()['access'])
-                                localStorage.set('refresh', response.json()['refresh'])
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.access) {
+                                localStorage.setItem('access', data.access);
+                                if (data.refresh) {
+                                    localStorage.setItem('refresh', data.refresh);
+                                }
                                 setIsAuthenticated(true);
-                            }
-                            else{
+                            } else {
                                 setIsAuthenticated(false);
                             }
+                            setLoading(false);
                         })
-                        .catch(error =>{
+                        .catch(error => {
                             console.log(error);
-                        })
+                            setIsAuthenticated(false);
+                            setLoading(false);
+                        });
                     }
                 })
-                .catch(error =>{
+                .catch(error => {
                     console.log(error);
-                })
+                    setIsAuthenticated(false);
+                    setLoading(false);
+                });
 
-            }else{
+            } else {
                 setIsAuthenticated(false);
+                setLoading(false);
             }
 
-        },[]);
+        }, []);
 
-        if(isAuthenticated){
-            return <wrappedComponent {...props}/>
-        }else{
-            return <Navigate to ="/login/"/>
+        if (loading) {
+            return <div>Loading...</div>;  // Or a spinner
+        }
+
+        if (isAuthenticated) {
+            return <WrappedComponent {...props} />;
+        } else {
+            return <Navigate to="/login/" />;
         }
     };
-};
+}
 
 export default withAuthentication
 

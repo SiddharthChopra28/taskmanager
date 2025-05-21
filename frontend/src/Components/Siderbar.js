@@ -49,7 +49,7 @@ import ToggleButton from './ToggleButton';
         const authToken = localStorage.getItem('access');
 
         if (!authToken ) {
-            console.error("Missing auth token ");
+            console.error("Missing auth token or user ID");
             return;
         }
 
@@ -99,7 +99,7 @@ import ToggleButton from './ToggleButton';
             console.log("Successfully joined room");
 
             // Optionally refresh the room list
-            axios.get(`${BASE_URL}rooms/byUser/}/`, {
+            axios.get(`${BASE_URL}rooms/byUser/`, {
                 headers: {
                     Authorization: `Bearer ${authToken}`
                 }
@@ -161,5 +161,5 @@ import ToggleButton from './ToggleButton';
   )
 }
 
-export default Siderbar
-//export default withAuthentication(Siderbar)
+// export default Siderbar
+export default withAuthentication(Siderbar)

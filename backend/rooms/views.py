@@ -17,17 +17,24 @@ from taskmanager.settings import BASE_URL, SECRET_KEY
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getRooms(req):
-    user = req.user
-    student = CustomUser.objects.get(id=user.id)
-    rooms= student.rooms.all()
 
-    serializer = RoomSerializer(rooms, many=True)
+    rooms= req.user.rooms.all()
+    
+    out = []
+    for room in rooms:
+        d = {}
+        d['name'] = room.name
+        d['owner'] = room.owner.id
+        d['students'] = [s.id for s in room.students.all()]
+
+        out.append(d)
+    
         
-    return Response(serializer.data)
+    return Response(out)
     # return list of all rooms the student is part of
         
 
-        
+
 # @api_view(['GET'])
 # @permission_classes([IsAuthenticated])
 # def getRoomInfo(req, roomid):
@@ -74,22 +81,24 @@ def makeAssignment(req):
 def createRoom(req):
     user = req.user
     data = req.data
-    serializer = RoomSerializer(data=req.data)
-    owner = CustomUser.objects.get(id=user.id)
     
-    if serializer.is_valid():
+    room = Room(
+    name=data['name'],
+    owner=user,
+    assignment_name="",
+    assignment_submissions={}
+    )
+    room.save()
+    
+    user.rooms.add(room)
 
-        rm = serializer.save(owner=owner)
-        roomid = rm.id
-        
-        hex_ = sha256(data['name'].encode('utf-8')).hexdigest() + sha256(owner.name.encode('utf-8')).hexdigest() + sha256(SECRET_KEY.encode('utf-8')).hexdigest()
+    roomid = room.id
+    
+    hex_ = sha256(data['name'].encode('utf-8')).hexdigest() + sha256(user.name.encode('utf-8')).hexdigest() + sha256(SECRET_KEY.encode('utf-8')).hexdigest()
 
-        joincode = str(roomid) + '/' + hex_
-        
-        return Response({'joincode': joincode}, status=status.HTTP_201_CREATED)
-        
-    return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
-
+    joincode = str(roomid) + '/' + hex_
+    
+    return Response({'joincode': joincode}, status=status.HTTP_201_CREATED)
 
     
     
