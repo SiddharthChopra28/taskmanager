@@ -48,8 +48,8 @@ import ToggleButton from './ToggleButton';
         setIsModalOpen(false);
         const authToken = localStorage.getItem('access');
 
-        if (!authToken || !userID) {
-            console.error("Missing auth token or user ID");
+        if (!authToken ) {
+            console.error("Missing auth token ");
             return;
         }
 
@@ -99,7 +99,7 @@ import ToggleButton from './ToggleButton';
             console.log("Successfully joined room");
 
             // Optionally refresh the room list
-            axios.get(`${BASE_URL}rooms/byUser/${userID}/`, {
+            axios.get(`${BASE_URL}rooms/byUser/}/`, {
                 headers: {
                     Authorization: `Bearer ${authToken}`
                 }

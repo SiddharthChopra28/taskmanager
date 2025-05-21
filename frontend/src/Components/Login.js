@@ -33,14 +33,6 @@ export default function Login(){
                 body: JSON.stringify({ email: formData.email }),
             })
             .then(res => res.json())
-            .then(userData => {
-                if (userData.id) {
-                    localStorage.setItem('userID', userData.id); 
-                }
-            })
-            .catch(err => {
-                console.error("Error fetching user ID:", err);
-            });
         } else {
             console.error("Login failed:", data);
         }
