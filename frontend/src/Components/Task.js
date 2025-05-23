@@ -7,14 +7,18 @@ import axios from 'axios';
 
 const BASE_URL = "http://127.0.0.1:8000/";
 var isOwner = 0
+var responses_for_owner="";
+var myresponse = "";
+
+var email;
 
 // const Task = ({ isOwner = false, roomid }) => {
 const Task = () => {
-  const [assignmentText, setAssignmentText] = useState('');
-  const [assignmentName, setAssignmentName] = useState('');
-  const [response, setResponse] = useState('');
-  const [success, setSuccess] = useState('');
-  const [error, setError] = useState('');
+    const [assignmentText, setAssignmentText] = useState('');
+    const [assignmentName, setAssignmentName] = useState('');
+    const [response, setResponse] = useState('');
+    const [success, setSuccess] = useState('');
+    const [error, setError] = useState('');
 
   // Determine target route and button label
 
@@ -41,6 +45,25 @@ const Task = () => {
         for (const room of rooms){
             if (room.roomid == roomid){
                 setAssignmentText(room.assignment_name)
+                if (isOwner){
+                    console.log(room.submissions)
+                    let json = room.submissions
+                    
+                    for (let i=0; i<Object.keys(json).length; i++){
+                        responses_for_owner += `${Object.keys(json)[i]}: ${json[Object.keys(json)[i]]} `
+                    }
+                }
+                else{
+                    console.log(room.submissions)
+                    email = localStorage.getItem('email')
+                    console.log(room.submissions[email])
+                    if (room.submissions[email]){
+                        myresponse = room.submissions[email]
+                    }
+                    console.log(myresponse)
+                    
+                    
+                }
             }
         }
     })
@@ -100,6 +123,7 @@ const Task = () => {
       if (res.status === 201) {
         setSuccess('Response submitted!');
         setError('');
+        myresponse = response;
         // setResponse('');
       } else {
         setError(data.error || 'Error submitting response.');
@@ -109,6 +133,7 @@ const Task = () => {
         console.log(err)
       setError('Network error');
       setSuccess('');
+      
     }
   };
 
@@ -128,7 +153,7 @@ const Task = () => {
           <p>No assignment has been posted yet.</p>
         )}
 
-        {isOwner && (
+        {(isOwner && assignmentText==="")&& (
           <div className="assignment-form mt-3">
             <TextField
               label="Assignment Name"
@@ -136,6 +161,7 @@ const Task = () => {
               variant="outlined"
               value={assignmentName}
               onChange={(e) => setAssignmentName(e.target.value)}
+              // pehle db se get karna padega
             />
             <Button
               variant="contained"
@@ -149,7 +175,26 @@ const Task = () => {
         )}
       </div>
 
-      {!isOwner && (
+
+        {(isOwner && assignmentText!="")&& (
+            <div className="assignment-box">
+                <h4>Submissions:</h4>
+                <p>{responses_for_owner}</p>
+            </div>
+        )}
+
+
+      {(!isOwner && myresponse!="") && (
+        <div className='p-3'>
+            <div className="assignment-box">
+                <h4>My Submission:</h4>
+                <p>{myresponse}</p>
+            </div>
+
+        </div>
+      )}
+
+      {(!isOwner && myresponse=="") && (
         <div className='p-3'>
           <TextField
             label="Your Response"

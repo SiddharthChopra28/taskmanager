@@ -27,6 +27,7 @@ def getRooms(req):
         d['name'] = room.name
         d['owner'] = room.owner.id
         d['assignment_name'] = room.assignment_name
+        d['submissions'] = room.assignment_submissions
         d['students'] = [s.id for s in room.students.all()]
 
         out.append(d)
@@ -145,7 +146,7 @@ def submitAssignment(req):
     if userid in prev_submissions.keys():
         return Response({'error': 'Unauthorized'})
     
-    prev_submissions[userid] = text
+    prev_submissions[req.user.email] = text
     room.assignment_submissions = prev_submissions
     room.save()
     

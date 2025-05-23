@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { useNavigate } from "react-router-dom"
+
 export default function Register() {
+    const navigate = useNavigate(); 
+
     const BASE_URL = "http://127.0.0.1:8000";
     const [formData,setFormData] = useState({
         "email":"",
@@ -31,6 +35,10 @@ export default function Register() {
             
             console.log(data);
         })
+        .then(()=>{
+            setTimeout(navigate, 3000, '/login/');
+            // navigate('/login/');
+        })
         .catch(error =>{
             console.log(error);
         })
@@ -57,7 +65,7 @@ export default function Register() {
         </div>
         {msgShow && (
             <div className='text-success mt-2'>
-                Registration successful! An activation code has been sent to your email!
+                Registration successful!
             </div>
         )}
 
