@@ -157,7 +157,7 @@ var userid = 0
             </div>
         </div>
         <div className = "siderbar__channelsList mt-3">
-            {channelloader ? (<Box sx={{width:'100%'}}>
+            {channelloader ? (<Box sx={{width:'100%'}}> 
             <LinearProgress/>
         </Box>):
         <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
