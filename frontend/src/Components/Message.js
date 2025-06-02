@@ -1,10 +1,14 @@
 import React from 'react'
 import Box from '@mui/material/Box';
-
-export default function Message({text,sent}) {
-  return (
-    <div className={`message ${sent ? 'sent' : 'recieved'}`} >
-        <div className ='message-bubble'>{text}</div>
-    </div>
-  )
+import "../styles/Message.css";
+function Message({ text, sent, sender }) {
+    return (
+        <div className={`message ${sent ? 'sent' : 'received'}`}>
+            {!sent && <div className="sender">{sender}</div>}
+            <div className="message-text">{text}</div>
+        </div>
+    );
 }
+
+
+export default Message;   

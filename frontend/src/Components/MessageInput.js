@@ -1,22 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
-export default function MessageInput() {
-    const {inputValue,setInputValue}= useState('');
-    const handleInputChange = (event) => {
-        setInputValue(event.target.value)
-    }
-    const handleSendMessage = () => {
-        console.log("Meaasage Send")
-    }
-  return (
-    <div className='message-input'>
-        <textarea 
-        placeholder='Type message'
-        value={inputValue}
-        onChange={handleInputChange}
-        />
-        <button onClick={handleSendMessage}>Send</button>
-    </div>
+function MessageInput({ onSend }) {
+    const [text, setText] = useState('');
 
-  )
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (text.trim()) {
+            onSend(text.trim());
+            setText('');
+        }
+    };
+
+    return (
+        <form onSubmit={handleSubmit} className="message-input">
+            <input
+                type="text"
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                placeholder="Type your message..."
+            />
+            <button type="submit">Send</button>
+        </form>
+    );
 }
+
+export default MessageInput;

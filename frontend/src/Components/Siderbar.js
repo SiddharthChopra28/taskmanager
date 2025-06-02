@@ -148,15 +148,15 @@ var userid = 0
 
   return (
     <div className="sidebar">
-        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '0.3rem', marginBottom: '1rem' }} className="sidebar__top" >
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }} className="sidebar__top" >
             <h3>CHANNELS</h3>
         </div>
-        <div className = "siderbar__channels mt-3"> 
+        <div className = "siderbar__channels "> 
             <div className = "siderbar__channelsHeader">
                 <ToggleButton />
             </div>
         </div>
-        <div className = "siderbar__channelsList mt-3">
+        <div className = "siderbar__channelsList ">
             {channelloader ? (<Box sx={{width:'100%'}}> 
             <LinearProgress/>
         </Box>):

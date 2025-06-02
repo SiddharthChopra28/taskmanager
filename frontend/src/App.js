@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
-import Register from './Components/Register';
-import Login from './Components/Login';
+import Register from './Pages/Register';
+import Login from './Pages/Login';
 import Siderbar from './Components/Siderbar';
 import Home from './Components/Home';
 import {createBrowserRouter,RouterProvider } from 'react-router-dom';
