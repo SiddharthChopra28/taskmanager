@@ -1,8 +1,10 @@
 import { Avatar, ListItem, ListItemAvatar, ListItemText, Button } from '@mui/material'
-import {React, useEffect, } from 'react'
+import { React, useEffect, } from 'react'
 import { Link } from 'react-router-dom'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import axios from 'axios'
+
+import '../styles/ChannelItem.css'
 
 
 export default function ChannelItem(props) {
@@ -12,7 +14,7 @@ export default function ChannelItem(props) {
     useEffect(() => {
         const authToken = localStorage.getItem('access');
 
-        if (!authToken ) {
+        if (!authToken) {
             console.error("Missing auth token or user ID");
             return;
         }
@@ -24,41 +26,49 @@ export default function ChannelItem(props) {
             params: {
                 roomid: props.channelid,
                 roomanme: props.name
-                
+
             }
         })
-        .then(response => {
-            const data = response.data;
+            .then(response => {
+                const data = response.data;
 
-            joincode = data['joincode']
-            
-            
-        })
-        .catch(error => {
-            console.error("Error fetching rooms:", error);
+                joincode = data['joincode']
 
-        });
+
+            })
+            .catch(error => {
+                console.error("Error fetching rooms:", error);
+
+            });
     }, []);
 
-    function getCode(){
-        navigator.clipboard.writeText(joincode); 
+    function getCode() {
+        navigator.clipboard.writeText(joincode);
         alert("Room join code copied to clipboard!")
 
     }
-    
 
 
-  return (
-    <a href={`/task/${props.channelid}/${Number(props.ownerid == props.userid)}`}>
-        <ListItem>
-            <ListItemAvatar>
-                <Avatar>
-                </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary={props.name} secondary={props.channelid}></ListItemText>
-            <Button onClick={getCode}><ContentCopyIcon></ContentCopyIcon></Button>
-        </ListItem>
-    </a>
-    
-  )
+
+    return (
+        <Link to={`/task/${props.channelid}/${Number(props.ownerid == props.userid)}`} className="channel-item-link">
+            <ListItem className="channel-item">
+                <ListItemAvatar>
+                    <Avatar className="channel-avatar">
+                        {props.name ? props.name.charAt(0).toUpperCase() : '#'}
+                    </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={props.name} secondary={props.channelid}></ListItemText>
+                <Button onClick={getCode}><ContentCopyIcon></ContentCopyIcon></Button>
+                <ListItemText
+                    primary={props.name}
+                    secondary={props.id}
+                    className="channel-text"
+                />
+
+            </ListItem>
+        </Link>
+
+    )
 }
+

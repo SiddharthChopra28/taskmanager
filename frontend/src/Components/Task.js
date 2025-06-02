@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import withAuthentication from '../utils/withAuthentication';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-
+import '../styles/Task.css'; // Assuming you have a CSS file for styling
 const BASE_URL = "http://127.0.0.1:8000/";
 var isOwner = 0
 var responses_for_owner = "";
@@ -136,90 +136,124 @@ const Task = () => {
         }
     };
 
-    return (
-        <div className='chat-area'>
-            <div className='chat-header text-center'>
-                <h3>Task Room</h3>
-            </div>
+  return (
+    <div className='chat-area'>
+  <div className='chat-header justify-content-center text-center'>
+    <h3>Task Room</h3>
+  </div>
 
-            <div className='messages p-3'>
-                {assignmentText ? (
-                    <div className="assignment-box">
-                        <h4>Assignment:</h4>
-                        <p>{assignmentText}</p>
-                    </div>
-                ) : (
-                    <p>No assignment has been posted yet.</p>
-                )}
-
-                {(isOwner && assignmentText === "") && (
-                    <div className="assignment-form mt-3">
-                        <TextField
-                            label="Assignment Name"
-                            fullWidth
-                            variant="outlined"
-                            value={assignmentName}
-                            onChange={(e) => setAssignmentName(e.target.value)}
-                        // pehle db se get karna padega
-                        />
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            className='mt-2'
-                            onClick={handleCreateAssignment}
-                        >
-                            Make Assignment
-                        </Button>
-                    </div>
-                )}
-            </div>
-
-
-            {(isOwner && assignmentText != "") && (
-                <div className="assignment-box">
-                    <h4>Submissions:</h4>
-                    <p>{responses_for_owner}</p>
-                </div>
-            )}
-
-
-            {(!isOwner && myresponse != "") && (
-                <div className='p-3'>
-                    <div className="assignment-box">
-                        <h4>My Submission:</h4>
-                        <p>{myresponse}</p>
-                    </div>
-
-                </div>
-            )}
-
-            {(!isOwner && myresponse == "") && (
-                <div className='p-3'>
-                    <TextField
-                        label="Your Response"
-                        fullWidth
-                        variant="outlined"
-                        value={response}
-                        onChange={(e) => setResponse(e.target.value)}
-                    />
-                    <Button
-                        variant="contained"
-                        color="success"
-                        className='mt-2'
-                        onClick={handleSubmitResponse}
-                    >
-                        Submit Response
-                    </Button>
-                </div>
-            )}
-
-            {(error || success) && (
-                <div className='text-center mt-2'>
-                    <p style={{ color: error ? 'red' : 'green' }}>{error || success}</p>
-                </div>
-            )}
+  <div className='messages'>
+    {/* Assignment Section */}
+    <div className="assignment-section">
+      {assignmentText ? (
+        <div className="assignment-box">
+          <h4>Assignment</h4>
+          <p>{assignmentText}</p>
         </div>
-    );
+      ) : (
+        <div className="no-assignment-box">
+          <p>No assignment has been posted yet.</p>
+        </div>
+      )}
+
+      {/* Owner: Create Assignment Form */}
+      {(isOwner && assignmentText === "") && (
+        <div className="assignment-form">
+          <h4>Create Assignment</h4>
+          <TextField
+            label="Assignment Description"
+            fullWidth
+            multiline
+            rows={4}
+            variant="outlined"
+            value={assignmentName}
+            onChange={(e) => setAssignmentName(e.target.value)}
+            className="assignment-input"
+          />
+          <Button
+            variant="contained"
+            color="black"
+            className="create-assignment-btn"
+            onClick={handleCreateAssignment}
+            disabled={!assignmentName.trim()}
+          >
+            Create Assignment
+          </Button>
+        </div>
+      )}
+    </div>
+
+    {/* Submissions Section - Owner View */}
+    {(isOwner && assignmentText !== "") && (
+      <div className="submissions-section">
+        <div className="submissions-box">
+          <h4>Student Submissions</h4>
+          {responses_for_owner ? (
+            <div className="submissions-content">
+              <p>{responses_for_owner}</p>
+            </div>
+          ) : (
+            <div className="no-submissions">
+              <p>No submissions yet.</p>
+            </div>
+          )}
+        </div>
+      </div>
+    )}
+
+    {/* Student View - My Submission */}
+    {(!isOwner && myresponse !== "") && (
+      <div className="my-submission-section">
+        <div className="submission-box">
+          <h4>My Submission</h4>
+          <div className="submission-content">
+            <p>{myresponse}</p>
+          </div>
+        </div>
+      </div>
+    )}
+
+    {/* Student View - Submit Response Form */}
+    {(!isOwner && myresponse === "" && assignmentText !== "") && (
+      <div className="response-section">
+        <div className="response-form">
+          <h4>Submit Your Response</h4>
+          <TextField
+            label="Your Response"
+            fullWidth
+            multiline
+            rows={4}
+            variant="outlined"
+            value={response}
+            onChange={(e) => setResponse(e.target.value)}
+            className="response-input"
+            placeholder="Enter your assignment response here..."
+          />
+          <Button
+            variant="contained"
+            color="success"
+            className="submit-response-btn"
+            onClick={handleSubmitResponse}
+            disabled={!response.trim()}
+          >
+            Submit Response
+          </Button>
+        </div>
+      </div>
+    )}
+
+    {/* Error/Success Messages */}
+    {(error || success) && (
+      <div className="message-alert">
+        <div className={`alert ${error ? 'error' : 'success'}`}>
+          {error || success}
+        </div>
+      </div>
+    )}
+  </div>
+</div>
+
+  );
 };
 
 export default withAuthentication(Task);

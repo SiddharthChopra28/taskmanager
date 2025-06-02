@@ -1,0 +1,90 @@
+/* Toggle Button Container */
+.toggle-button-container {
+  display: flex;
+  justify-content: center;
+  margin: 16px 0;
+  padding: 0 16px;
+}
+
+.toggle-button-link {
+  text-decoration: none;
+  width: 100%;
+  max-width: 200px;
+}
+
+/* Material UI Button Override for Toggle */
+.toggle-button-container .MuiButton-root {
+  background: linear-gradient(135deg, #52796F 0%, #354F52 100%) !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 12px !important;
+  padding: 12px 24px !important;
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+  text-transform: none !important;
+  letter-spacing: 0.02em !important;
+  box-shadow: 0 4px 12px rgba(82, 121, 111, 0.25) !important;
+  transition: all 0.3s ease !important;
+  width: 100% !important;
+  min-height: 44px !important;
+}
+
+.toggle-button-container .MuiButton-root:hover {
+  background: linear-gradient(135deg, #354F52 0%, #2F3E46 100%) !important;
+  box-shadow: 0 6px 16px rgba(82, 121, 111, 0.35) !important;
+  transform: translateY(-2px) !important;
+}
+
+.toggle-button-container .MuiButton-root:active {
+  transform: translateY(0) !important;
+  box-shadow: 0 2px 8px rgba(82, 121, 111, 0.2) !important;
+}
+
+/* Icon support (if you want to add icons later) */
+.toggle-button-container .MuiButton-startIcon {
+  margin-right: 8px !important;
+}
+
+.toggle-button-container .MuiButton-endIcon {
+  margin-left: 8px !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .toggle-button-container {
+    margin: 12px 0;
+    padding: 0 12px;
+  }
+  
+  .toggle-button-container .MuiButton-root {
+    padding: 10px 20px !important;
+    font-size: 0.9rem !important;
+    min-height: 40px !important;
+  }
+}
+
+/* Alternative: Compact version for sidebar */
+.toggle-button-compact {
+  display: flex;
+  justify-content: center;
+  margin: 8px 0;
+  padding: 0 8px;
+}
+
+.toggle-button-compact .MuiButton-root {
+  background: linear-gradient(135deg, #52796F 0%, #354F52 100%) !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
+  padding: 8px 16px !important;
+  font-weight: 600 !important;
+  font-size: 0.85rem !important;
+  text-transform: none !important;
+  box-shadow: 0 2px 8px rgba(82, 121, 111, 0.2) !important;
+  transition: all 0.2s ease !important;
+  width: 100% !important;
+}
+
+.toggle-button-compact .MuiButton-root:hover {
+  background: linear-gradient(135deg, #354F52 0%, #2F3E46 100%) !important;
+  transform: translateY(-1px) !important;
+}

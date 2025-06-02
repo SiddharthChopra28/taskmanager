@@ -1,34 +1,41 @@
-*{
+* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
+
 .sidebar {
   display: flex;
-  margin:0;
+  margin: 0;
   flex-direction: column;
   flex: 0.6 1 260px;
   min-width: 220px;
   max-width: 340px;
   height: 100vh;
-  background: 
-    linear-gradient(120deg, #111827 80%, #2563eb 120%),
-    repeating-linear-gradient(135deg, #1e293b 0 2px, transparent 2px 16px);
-  box-shadow: 2px 0 24px rgba(16, 30, 54, 0.19), 0 1.5px 8px rgba(30, 41, 59, 0.12) inset;
-  border-right: 2px solid #2563eb;
+  background:#1d3230;
+  border-right: 2px solid #84A98C;
   position: relative;
   overflow-y: auto;
 }
 
+.sidebar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  z-index: 2;
+}
+
 .sidebar__top {
-  margin :0 ;
+  margin: 0;
   width: 100%;
-  background: rgba(30, 58, 138, 0.55);
-  backdrop-filter: blur(8px);
+  background: #192527;
   color: #fff;
-  border-bottom: 1.5px solid #2563eb;
+  border-bottom: 2px solid #52796F;
   border-radius: 0;
-  box-shadow: 0 2px 12px #2563eb22;
+  box-shadow: 0 2px 12px rgba(82, 121, 111, 0.22);
   padding: 16px 10px 14px 10px;
   letter-spacing: 0.04em;
   font-weight: 700;
@@ -42,7 +49,7 @@
   font-weight: 700;
   letter-spacing: 0.09em;
   color: #f1f5f9;
-  text-shadow: 0 2px 8px #2563eb55;
+  text-shadow: 0 2px 8px rgba(82, 121, 111, 0.55);
 }
 
 .siderbar__channels {
@@ -66,7 +73,7 @@
   flex-direction: column;
   gap: 8px;
   scrollbar-width: thin;
-  scrollbar-color: #2563eb #111827;
+  scrollbar-color: #52796F #2F3E46;
   background: transparent;
 }
 
@@ -74,7 +81,7 @@
   width: 7px;
 }
 .siderbar__channelsList::-webkit-scrollbar-thumb {
-  background: #2563eb;
+  background: #52796F;
   border-radius: 4px;
 }
 .siderbar__channelsList::-webkit-scrollbar-track {
@@ -82,41 +89,40 @@
 }
 
 .sidebar__addChannel {
-  background: linear-gradient(90deg, #3b82f6 70%, #38bdf8 100%);
+  background: #223b34;
   color: #fff;
   padding: 13px 36px;
-  border: none;
+  border: 2px solid  #2a3d39;
   border-radius: 12px;
   cursor: pointer;
   font-weight: 800;
   font-size: 1.08rem;
   letter-spacing: 0.04em;
-  box-shadow: 0 4px 16px #2563eb33, 0 1.5px 8px #38bdf833 inset;
   transition: background 0.18s, box-shadow 0.18s, transform 0.12s;
   outline: none;
 }
 
 .sidebar__addChannel:hover {
-  background: linear-gradient(90deg, #2563eb 80%, #3b82f6 100%);
-  box-shadow: 0 6px 24px #2563eb55;
+  background: linear-gradient(135deg, #354F52 0%, #2F3E46 100%);
+  box-shadow: 0 6px 24px rgba(82, 121, 111, 0.55);
   transform: translateY(-2px) scale(1.05);
 }
 
 .sidebar__addChannel:active {
-  background: #1e40af;
-  color: #bae6fd;
+  background: #2F3E46;
+  color: #CAD2C5;
   transform: scale(0.98);
 }
 
 /* Loader and List styling (Material UI) */
 .MuiLinearProgress-root {
-  background: #1e293b !important;
+  background: #354F52 !important;
   border-radius: 8px;
   height: 8px !important;
 }
 
 .MuiLinearProgress-bar {
-  background: linear-gradient(90deg, #3b82f6 70%, #38bdf8 100%) !important;
+  background: linear-gradient(90deg, #52796F 70%, #84A98C 100%) !important;
 }
 
 .MuiList-root {
@@ -126,14 +132,14 @@
 .MuiListItem-root {
   border-radius: 10px !important;
   margin-bottom: 3px;
-  color: #e0e7ef !important;
-  background: rgba(30, 41, 59, 0.72) !important;
+  color: #CAD2C5 !important;
+  background: rgba(53, 79, 82, 0.72) !important;
   transition: background 0.15s, color 0.15s;
-  box-shadow: 0 1px 4px #2563eb22;
+  box-shadow: 0 1px 4px rgba(82, 121, 111, 0.22);
 }
 
 .MuiListItem-root:hover {
-  background: linear-gradient(90deg, #2563eb 30%, #1e293b 100%) !important;
+  background: linear-gradient(90deg, #52796F 30%, #354F52 100%) !important;
   color: #fff !important;
 }
 

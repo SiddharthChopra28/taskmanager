@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import Message from './Message';
 import MessageInput from './MessageInput';
 import withAuthentication from '../utils/withAuthentication';
-// import WebSocket from 'isomorphic-ws'; // Ensure you have a WebSocket polyfill if needed
 function ChatArea() {
     const [messages, setMessages] = useState([]);
     const socketRef = useRef(null);
@@ -19,10 +18,10 @@ function ChatArea() {
             setMessages(prev => [...prev, {
                 text: data.message,
                 sender: data.sender,
-                // sent: data.sender === currentUser,  // You'll define `currentUser`
+                timestamp: data.timestamp || new Date().toISOString(),
+                sent: false
             }]);
         };
-
 
         ws.onclose = () => {
             console.log('WebSocket connection closed');
@@ -36,21 +35,45 @@ function ChatArea() {
     }, []);
 
     const handleSendMessage = (text) => {
+        const timestamp = new Date().toISOString();
+
         if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
-            socketRef.current.send(JSON.stringify({ message: text }));
-            setMessages(prev => [...prev, { text, sent: true }]);
+            socketRef.current.send(JSON.stringify({ message: text, timestamp }));
+            setMessages(prev => [...prev, {
+                text,
+                sent: true,
+                sender: "You",
+                timestamp
+            }]);
         }
     };
 
     return (
-        //needs updateing
         <div className='chat-area'>
             <div className='chat-header text-center'>
                 <h3>Chat Room</h3>
             </div>
+            <Message
+                text="Welcome to the chat! Type your message below."
+                sent={false}
+                sender="System"
+                timestamp={new Date().toISOString()}
+            />
+            <Message
+                text="Welcome to the chat! Type your message below."
+                sent={true}
+                sender="System"
+                timestamp={new Date().toISOString()}
+            />
             <div className='messages'>
                 {messages.map((msg, idx) => (
-                    <Message key={idx} text={msg.text} sent={msg.sent} sender={msg.sender} />
+                    <Message
+                        key={idx}
+                        text={msg.text}
+                        sent={msg.sent}
+                        sender={msg.sender}
+                        timestamp={msg.timestamp}
+                    />
                 ))}
             </div>
             <MessageInput onSend={handleSendMessage} />
