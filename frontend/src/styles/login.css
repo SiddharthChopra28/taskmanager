@@ -1,14 +1,15 @@
 .login-container {
-  max-width: 400px;
-  margin: 48px auto;
-  background: linear-gradient(135deg, #e0f2fe 0%, #f8fafc 100%);
-  border-radius: 22px;
-  box-shadow: 0 8px 36px rgba(37, 99, 235, 0.16), 0 1.5px 12px rgba(30, 41, 59, 0.09);
-  padding: 36px 32px 28px 32px;
+  max-width: 420px;
+  margin: 60px auto;
+  background: #ffffff;
+  border-radius: 24px;
+  background-color: #eef8e8;
+  box-shadow: 0 12px 48px rgba(47, 62, 70, 0.12), 0 4px 16px rgba(53, 79, 82, 0.08);
+  padding: 40px 36px 32px 36px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  border: 2.5px solid #3b82f6;
+  border: 1px solid #CAD2C5;
   position: relative;
   overflow: hidden;
 }
@@ -16,51 +17,50 @@
 .login-container::before {
   content: "";
   position: absolute;
-  top: -60px;
-  right: -60px;
-  width: 140px;
-  height: 140px;
-  background: radial-gradient(circle at 70% 30%, #3b82f6 0%, #2563eb 60%, transparent 100%);
-  opacity: 0.18;
-  z-index: 0;
-}
-.login-container::after {
-  content: "";
-  position: absolute;
-  bottom: -40px;
-  left: -40px;
-  width: 100px;
-  height: 100px;
-  background: radial-gradient(circle at 30% 70%, #60a5fa 0%, #38bdf8 70%, transparent 100%);
-  opacity: 0.16;
-  z-index: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  z-index: 1;
 }
 
 .login-header {
   text-align: center;
-  margin-bottom: 28px;
+  margin-bottom: 32px;
   position: relative;
   z-index: 1;
 }
 
 .login-header h3 {
-  font-size: 2.2rem;
-  font-weight: 800;
-  color: #2563eb;
-  letter-spacing: 0.04em;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #2F3E46;
+  letter-spacing: -0.02em;
   margin: 0;
-  text-shadow: 0 2px 8px #bae6fd80;
+  position: relative;
+}
+
+.login-header h3::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #52796F, #84A98C);
+  border-radius: 2px;
 }
 
 .login-field {
-  margin-bottom: 22px;
+  margin-bottom: 24px;
   position: relative;
   z-index: 1;
 }
 
 .login-action {
-  margin-top: 8px;
-  margin-bottom: 18px;
+  margin-top: 12px;
+  margin-bottom: 20px;
   position: relative;
   z-index: 1;
 }
@@ -68,16 +68,16 @@
 /* Error for login */
 .login-error {
   color: #fff;
-  background: linear-gradient(90deg, #2563eb 60%, #dc2626 100%);
-  border: 1.5px solid #dc2626;
-  padding: 11px 18px;
-  border-radius: 8px;
-  margin-bottom: 14px;
+  background: linear-gradient(135deg, #354F52 0%, #dc2626 100%);
+  border: none;
+  padding: 14px 20px;
+  border-radius: 12px;
+  margin-bottom: 16px;
   text-align: center;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.95rem;
   letter-spacing: 0.01em;
-  box-shadow: 0 2px 8px #dc262640;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
   position: relative;
   z-index: 1;
 }
@@ -85,83 +85,115 @@
 /* Success for register */
 .register-success {
   color: #fff;
-  background: linear-gradient(90deg, #22d3ee 60%, #2563eb 100%);
-  border: 1.5px solid #38bdf8;
-  padding: 11px 18px;
-  border-radius: 8px;
-  margin-bottom: 14px;
+  background: linear-gradient(135deg, #52796F 0%, #84A98C 100%);
+  border: none;
+  padding: 14px 20px;
+  border-radius: 12px;
+  margin-bottom: 16px;
   text-align: center;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.95rem;
   letter-spacing: 0.01em;
-  box-shadow: 0 2px 8px #38bdf840;
+  box-shadow: 0 4px 12px rgba(82, 121, 111, 0.25);
   position: relative;
   z-index: 1;
 }
 
 /* Material UI override for TextField */
 .MuiOutlinedInput-root {
-  background: #f1f5f9;
-  border-radius: 8px;
+  background: #f8faf9;
+  border-radius: 12px;
+  transition: all 0.2s ease;
 }
+
+.MuiOutlinedInput-root:hover {
+  background: #f0f4f2;
+}
+
 .MuiOutlinedInput-notchedOutline {
-  border-color: #60a5fa !important;
+  border-color: #CAD2C5 !important;
+  border-width: 2px !important;
 }
+
 .Mui-focused .MuiOutlinedInput-notchedOutline {
-  border-color: #2563eb !important;
+  border-color: #52796F !important;
+  border-width: 2px !important;
 }
+
 .MuiInputLabel-root {
-  color: #2563eb !important;
+  color: #354F52 !important;
   font-weight: 500;
 }
+
 .Mui-focused .MuiInputLabel-root {
-  color: #1d4ed8 !important;
+  color: #2F3E46 !important;
 }
 
 .login-action .MuiButton-root {
-  background: linear-gradient(90deg, #3b82f6 70%, #2563eb 100%);
+  background: linear-gradient(135deg, #52796F 0%, #354F52 100%);
   color: #fff;
   font-weight: 700;
   font-size: 1.1rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 18px #3b82f640;
-  transition: background 0.18s, box-shadow 0.18s, transform 0.12s;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(82, 121, 111, 0.3);
+  transition: all 0.3s ease;
+  text-transform: none;
+  padding: 14px 0;
 }
+
 .login-action .MuiButton-root:hover {
-  background: linear-gradient(90deg, #2563eb 80%, #1e40af 100%);
-  box-shadow: 0 6px 24px #2563eb40;
-  transform: translateY(-2px) scale(1.025);
+  background: linear-gradient(135deg, #354F52 0%, #2F3E46 100%);
+  box-shadow: 0 8px 28px rgba(82, 121, 111, 0.4);
+  transform: translateY(-2px);
 }
 
 .login-footer {
   text-align: center;
-  font-size: 1.05rem;
-  color: #64748b;
-  margin-top: 16px;
+  font-size: 1rem;
+  color: #354F52;
+  margin-top: 20px;
   position: relative;
   z-index: 1;
+  padding-top: 20px;
+  border-top: 1px solid #CAD2C5;
 }
 
 .login-footer a {
-  color: #2563eb;
-  font-weight: 700;
+  color: #52796F;
+  font-weight: 600;
   text-decoration: none;
-  transition: color 0.18s;
-  margin-left: 2px;
+  transition: color 0.2s ease;
+  margin-left: 4px;
+  position: relative;
+}
+
+.login-footer a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #52796F;
+  transition: width 0.3s ease;
 }
 
 .login-footer a:hover {
-  color: #1d4ed8;
-  text-decoration: underline;
+  color: #2F3E46;
+}
+
+.login-footer a:hover::after {
+  width: 100%;
 }
 
 /* Responsive for mobile */
 @media (max-width: 480px) {
   .login-container {
-    padding: 18px 4vw 18px 4vw;
-    max-width: 98vw;
+    padding: 24px 20px;
+    max-width: 95vw;
+    margin: 20px auto;
   }
   .login-header h3 {
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
 }

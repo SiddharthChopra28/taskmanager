@@ -1,0 +1,140 @@
+.assignment-box {
+  background: #52796F;
+  padding: 24px 28px;
+  border-radius: 8px;
+  margin-bottom: 0px;
+  border: 2px solid #263935;
+  box-shadow: 0 2px 12px rgba(82, 121, 111, 0.15);
+  font-size: 1.2rem;
+  color: #ffffff;
+}
+
+.assignment-box h3 {
+  margin: 0 0 12px 0;
+  color: #f1f5f9;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.submissions-box {
+  background: #52796F;
+  padding: 24px 28px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 2px solid #263935;
+  box-shadow: 0 2px 12px rgba(132, 169, 140, 0.15);
+  font-size: 1rem;
+  color: #ffffff;
+  min-height: 200px;
+}
+
+.submissions-box h3 {
+  margin: 0 0 12px 0;
+  color: #f1f5f9;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+/* Task Room Specific Styles */
+.assignment-section,
+.submissions-section,
+.my-submission-section,
+.response-section {
+  margin-bottom: 24px;
+}
+
+.no-assignment-box {
+  background: #52796F;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  border: 2px solid #84A98C;
+  color: #CAD2C5;
+  margin-bottom: 40px;
+  opacity: 90%;
+}
+
+.assignment-form,
+.response-form {
+  background: #52796F;
+  padding: 24px;
+  border-radius: 8px;
+  border: 2px solid #263935;
+  box-shadow: 0 2px 12px rgba(82, 121, 111, 0.15);
+}
+
+.assignment-form h4,
+.response-form h4 {
+  color: #f1f5f9;
+  margin-bottom: 16px;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.assignment-input,
+.response-input {
+  margin-bottom: 16px !important;
+}
+
+.create-assignment-btn,
+.submit-response-btn {
+  margin-top: 12px !important;
+  padding: 12px 24px !important;
+  font-weight: 600 !important;
+  color:white;
+  border: 2px solid #263935 !important;
+  background-color: #396558 !important;
+}
+
+.submissions-content,
+.submission-content {
+  background: rgba(47, 62, 70, 0.5);
+  padding: 16px;
+  border-radius: 8px;
+  color: #f1f5f9;
+  border-left: 4px solid #84A98C;
+  margin-top: 12px;
+}
+
+.no-submissions {
+  text-align: center;
+  color: #84A98C;
+  font-style: italic;
+  padding: 20px;
+}
+
+.message-alert {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+}
+
+.alert {
+  padding: 12px 20px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+  margin: 16px 0;
+}
+
+.alert.success {
+  background: linear-gradient(135deg, #52796F 0%, #84A98C 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(82, 121, 111, 0.25);
+}
+
+.alert.error {
+  background: linear-gradient(135deg, #354F52 0%, #dc2626 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+}
+
+/* Material UI Overrides for Task Room */
+.assignment-input .MuiOutlinedInput-root,
+.response-input .MuiOutlinedInput-root {
+  background: #f8faf9 !important;
+}
+
+.assignment-input .MuiInputLabel-root,
+.response-input .MuiInputLabel-root {
+  color: #354F52 !important;
+}

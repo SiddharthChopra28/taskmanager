@@ -7,7 +7,7 @@ from .models import Room
 from accounts.models import CustomUser
 from accounts.serializers import UserCreateSerializer
 from .serializers import RoomSerializer
-from chat.serializers import MessageSerializer
+from chat.serializer import UserGetSerializer   
 from hashlib import sha256
 from taskmanager.settings import BASE_URL, SECRET_KEY
 

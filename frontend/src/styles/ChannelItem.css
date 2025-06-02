@@ -1,0 +1,107 @@
+/* Channel Item Styling */
+.channel-item-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  margin-bottom: 6px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.channel-item-link:hover {
+  transform: translateX(4px);
+}
+
+.channel-item {
+  background: rgba(53, 79, 82, 0.72) !important;
+  border-radius: 12px !important;
+  margin-bottom: 0 !important;
+  padding: 8px 12px !important;
+  border: 1px solid rgba(82, 121, 111, 0.3) !important;
+  box-shadow: 0 2px 8px rgba(82, 121, 111, 0.15) !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+}
+
+.channel-item:hover {
+  background: linear-gradient(90deg, #52796F 30%, #354F52 100%) !important;
+  border-color: #52796F !important;
+  box-shadow: 0 4px 16px rgba(82, 121, 111, 0.25) !important;
+}
+
+.channel-avatar {
+  background: linear-gradient(135deg, #52796F 0%, #354F52 100%) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+  width: 40px !important;
+  height: 40px !important;
+  box-shadow: 0 2px 8px rgba(82, 121, 111, 0.2) !important;
+}
+
+.channel-item:hover .channel-avatar {
+  background: linear-gradient(135deg, #84A98C 0%, #52796F 100%) !important;
+  transform: scale(1.05);
+}
+
+.channel-text .MuiListItemText-primary {
+  color: #CAD2C5 !important;
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+  margin-bottom: 2px !important;
+}
+
+.channel-text .MuiListItemText-secondary {
+  color: #84A98C !important;
+  font-size: 0.85rem !important;
+  opacity: 0.8 !important;
+}
+
+.channel-item:hover .channel-text .MuiListItemText-primary {
+  color: #ffffff !important;
+}
+
+.channel-item:hover .channel-text .MuiListItemText-secondary {
+  color: #CAD2C5 !important;
+  opacity: 1 !important;
+}
+
+/* Active/Selected Channel State */
+.channel-item.active {
+  background: linear-gradient(90deg, #52796F 0%, #84A98C 100%) !important;
+  border-color: #84A98C !important;
+}
+
+.channel-item.active .channel-text .MuiListItemText-primary {
+  color: #ffffff !important;
+}
+
+.channel-item.active .channel-text .MuiListItemText-secondary {
+  color: #f1f5f9 !important;
+}
+
+.channel-item.active .channel-avatar {
+  background: linear-gradient(135deg, #CAD2C5 0%, #84A98C 100%) !important;
+  color: #2F3E46 !important;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .channel-item {
+    padding: 10px 12px !important;
+  }
+  
+  .channel-avatar {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 0.9rem !important;
+  }
+  
+  .channel-text .MuiListItemText-primary {
+    font-size: 0.95rem !important;
+  }
+  
+  .channel-text .MuiListItemText-secondary {
+    font-size: 0.8rem !important;
+  }
+}

@@ -152,7 +152,7 @@ var userid = 0
             <h3>CHANNELS</h3>
         </div>
         <div className = "siderbar__channels "> 
-            <div className = "siderbar__channelsHeader">
+            <div className = "siderbar__channelsHeader justify-content-center text-center">
                 <ToggleButton />
             </div>
         </div>
