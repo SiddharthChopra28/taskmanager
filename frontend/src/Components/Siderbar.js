@@ -89,6 +89,7 @@ var userid = 0
         .then(response => {
             console.log("Room created with join code:", response.data.joincode);
             navigator.clipboard.writeText(response.data.joincode); // copy code to clipboardddd
+            alert("Room join code copied to clipboard!")
             return axios.get(`${BASE_URL}rooms/byUser/`, {
                     headers: {
                         Authorization: `Bearer ${authToken}`

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import getRooms, makeAssignment, createRoom, joinLink, submitAssignment
+from .views import getRooms, makeAssignment, createRoom, joinLink, submitAssignment, getLink
 
 urlpatterns = [
     path('byUser/', getRooms),
@@ -7,5 +7,6 @@ urlpatterns = [
     path('createRoom/', createRoom),
     path('createAss/', makeAssignment),
     path('join/', joinLink),
-    path('submit/', submitAssignment)
+    path('submit/', submitAssignment),
+    path('/getLink/', getLink)
 ]

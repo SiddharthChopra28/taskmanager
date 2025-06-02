@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import Message from './Message';
 import MessageInput from './MessageInput';
 import withAuthentication from '../utils/withAuthentication';
-import WebSocket from 'isomorphic-ws'; // Ensure you have a WebSocket polyfill if needed
+// import WebSocket from 'isomorphic-ws'; // Ensure you have a WebSocket polyfill if needed
 function ChatArea() {
     const [messages, setMessages] = useState([]);
     const socketRef = useRef(null);
@@ -19,7 +19,7 @@ function ChatArea() {
             setMessages(prev => [...prev, {
                 text: data.message,
                 sender: data.sender,
-                sent: data.sender === currentUser,  // You'll define `currentUser`
+                // sent: data.sender === currentUser,  // You'll define `currentUser`
             }]);
         };
 

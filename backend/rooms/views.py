@@ -7,7 +7,7 @@ from .models import Room
 from accounts.models import CustomUser
 from accounts.serializers import UserCreateSerializer
 from .serializers import RoomSerializer
-from chat.serializers import MessageSerializer
+from chat.serializer import UserGetSerializer
 from hashlib import sha256
 from taskmanager.settings import BASE_URL, SECRET_KEY
 
@@ -81,6 +81,9 @@ def makeAssignment(req):
     return Response({'message': 'vinayak is gay'} , status=status.HTTP_201_CREATED)
 
 
+def generateLink(roomid, roomname, username, key):
+    return str(roomid) + '/' + sha256(roomname.encode('utf-8')).hexdigest() + sha256(username.encode('utf-8')).hexdigest() + sha256(key.encode('utf-8')).hexdigest()
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def createRoom(req):
@@ -99,14 +102,23 @@ def createRoom(req):
 
     roomid = room.id
     
-    hex_ = sha256(data['name'].encode('utf-8')).hexdigest() + sha256(user.name.encode('utf-8')).hexdigest() + sha256(SECRET_KEY.encode('utf-8')).hexdigest()
-
-    joincode = str(roomid) + '/' + hex_
+    joincode = generateLink(roomid, data['name'], user.name, SECRET_KEY)
     
     return Response({'joincode': joincode}, status=status.HTTP_201_CREATED)
 
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getLink(req):
+    user = req.user
+    roomid = req.GET['roomid']
+    roomname = req.GET['roomname']
+    username = user.name
+    link = generateLink(roomid, roomname, username, SECRET_KEY)
     
+    return Response({'joincode': link}, status=status.HTTP_201_CREATED)
     
+
     
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
