@@ -138,3 +138,22 @@
 .response-input .MuiInputLabel-root {
   color: #354F52 !important;
 }
+.centric{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  gap: 16px;
+}
+.loggg{
+  color: #CAD2C5;
+  font-size: 1rem;
+  background-color: #496a62;
+  font-weight: 600;
+  padding: 0px 0px 0px 0px ;
+  border: 2px solid #0b110d;
+  text-align: center;
+  margin-top: 0px;
+}

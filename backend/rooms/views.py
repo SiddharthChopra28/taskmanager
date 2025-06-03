@@ -170,10 +170,10 @@ def submitAssignment(req):
             present_files = []
             max_num = 0
             
-        filename = str(max_num)+'.pdf'
+        filename = str(max_num+1)+'.pdf'
         filepath = os.path.join(settings.MEDIA_ROOT, filename)
         
-        with open(filepath, 'w') as f:
+        with open(filepath, 'wb') as f:
             for chunk in file_.chunks():
                 f.write(chunk)
             
@@ -196,4 +196,4 @@ def submitAssignment(req):
     room.assignment_submissions = prev_submissions
     room.save()
     
-    return Response({'hi': 'vinayak is gae'}, status=status.HTTP_201_CREATED)
+    return Response({'hi': 'sid is gae'}, status=status.HTTP_201_CREATED)
