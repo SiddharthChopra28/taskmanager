@@ -4,7 +4,10 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useNavigate } from "react-router-dom"
 import '../styles/login.css';
-export default function Register() {
+import withoutAuthentication from '../utils/withoutAuthentication';
+
+
+function Login() {
     const navigate = useNavigate();
 
 
@@ -38,7 +41,7 @@ export default function Register() {
                 localStorage.setItem('refresh', data['refresh'])
                 localStorage.setItem('email', formData.email);
                 console.log('login success')
-                navigate('/chat/');
+                navigate('/');
             })
             .catch(error => {
                 console.log(error);
@@ -94,3 +97,5 @@ export default function Register() {
         </>
     )
 }
+
+export default withoutAuthentication(Login)

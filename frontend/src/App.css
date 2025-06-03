@@ -4,6 +4,10 @@
   height: 100vh;
   background: #2F3E46;
 }
+.home-container {
+  display: flex;
+
+}
 
 .chat-header {
   padding: 7px 20px;

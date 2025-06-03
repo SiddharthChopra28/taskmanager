@@ -12,7 +12,8 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element:<Home/>
+      element:<div className='home-container'><Siderbar/>
+      <Home/></div>
     },
     {
       path:"/login/",
@@ -23,7 +24,7 @@ function App() {
       element:<Register/>
     },
     {
-      path:"/chat/",
+      path:"/chat/:roomid/:owner",
       element:<><div className='chat-container'>
         <Siderbar/>
         <ChatArea/>
@@ -37,6 +38,9 @@ function App() {
 
         </div></>
     },
+    {path: "/*",
+    element: <div>MERE ROUTES KE SATH CHHED CHAAD MAT KAR</div> 
+    }
   ])
   return (
    <>

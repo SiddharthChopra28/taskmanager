@@ -10,7 +10,9 @@ from .serializers import RoomSerializer
 from chat.serializer import UserGetSerializer
 from hashlib import sha256
 from taskmanager.settings import BASE_URL, SECRET_KEY
+from django.conf import settings
 
+import os
 
 # from .serializers import ItemSerializer
 
@@ -151,6 +153,36 @@ def joinLink(req):
 def submitAssignment(req):
     text = req.data['text']
     roomid = req.data['roomid']
+    
+    file_ = req.FILES.get('file')
+    if not file_:
+        return Response({'error': 'no file found'}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+
+        try:
+            present_files = os.listdir(settings.MEDIA_ROOT)
+            present_files.sort()
+            max_num = int(present_files[-1].strip('.pdf'))
+            
+        except FileNotFoundError:
+            os.mkdir(settings.MEDIA_ROOT)
+            present_files = []
+            max_num = 0
+            
+        filename = str(max_num)+'.pdf'
+        filepath = os.path.join(settings.MEDIA_ROOT, filename)
+        
+        with open(filepath, 'w') as f:
+            for chunk in file_.chunks():
+                f.write(chunk)
+            
+    
+    except Exception as e:
+        print(e)
+        return Response({'error': 'Error saving file'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+    
     room = Room.objects.get(id=roomid)
     userid = req.user.id
 
@@ -158,7 +190,9 @@ def submitAssignment(req):
     if userid in prev_submissions.keys():
         return Response({'error': 'Unauthorized'})
     
-    prev_submissions[req.user.email] = text
+    
+    
+    prev_submissions[req.user.email] = [text, filename]
     room.assignment_submissions = prev_submissions
     room.save()
     

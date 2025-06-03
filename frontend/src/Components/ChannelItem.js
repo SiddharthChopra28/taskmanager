@@ -2,6 +2,7 @@ import { Avatar, ListItem, ListItemAvatar, ListItemText, Button } from '@mui/mat
 import { React, useEffect, } from 'react'
 import { Link } from 'react-router-dom'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+
 import axios from 'axios'
 
 import '../styles/ChannelItem.css'
@@ -25,7 +26,7 @@ export default function ChannelItem(props) {
             },
             params: {
                 roomid: props.channelid,
-                roomanme: props.name
+                roomname: props.name
 
             }
         })
@@ -58,13 +59,8 @@ export default function ChannelItem(props) {
                         {props.name ? props.name.charAt(0).toUpperCase() : '#'}
                     </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={props.name} secondary={props.channelid}></ListItemText>
+                <ListItemText primary={props.name}></ListItemText>
                 <Button onClick={getCode}><ContentCopyIcon></ContentCopyIcon></Button>
-                <ListItemText
-                    primary={props.name}
-                    secondary={props.id}
-                    className="channel-text"
-                />
 
             </ListItem>
         </Link>

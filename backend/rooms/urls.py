@@ -8,5 +8,5 @@ urlpatterns = [
     path('createAss/', makeAssignment),
     path('join/', joinLink),
     path('submit/', submitAssignment),
-    path('/getLink/', getLink)
+    path('getLink/', getLink)
 ]

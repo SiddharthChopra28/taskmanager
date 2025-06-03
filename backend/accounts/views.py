@@ -6,7 +6,7 @@ from rest_framework import status
 
 class GetUserId(APIView):
     permission_classes = [IsAuthenticated]
-
+    
     def post(self, request):
         try:
             useremail = request.data['email']

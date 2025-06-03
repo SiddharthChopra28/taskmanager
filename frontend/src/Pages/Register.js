@@ -3,8 +3,9 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import '../styles/login.css';
 import { useNavigate } from "react-router-dom"
+import withoutAuthentication from '../utils/withoutAuthentication';
 
-export default function Register() {
+ function Register() {
     const navigate = useNavigate();
 
     const BASE_URL = "http://127.0.0.1:8000";
@@ -109,3 +110,5 @@ export default function Register() {
 
     )
 }
+
+export default withoutAuthentication(Register);
